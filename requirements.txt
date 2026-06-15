@@ -1,0 +1,56 @@
+# ImpactIQ bridge — Azure App Service (Linux/Python) runtime dependencies.
+# Generated from the working .venv (pip freeze), pinned for reproducible
+# cloud builds. The package itself (impactiq) is NOT pip-installed on Azure;
+# it runs from the deployed source with PYTHONPATH=/home/site/wwwroot/src
+# (App Service app setting). Regenerate with:  pip freeze > requirements.txt
+# then re-drop the "-e ." editable line and re-add gunicorn.
+agent-framework-core==1.8.1
+annotated-doc==0.0.4
+annotated-types==0.7.0
+anyio==4.13.0
+azure-ai-projects==2.2.0
+azure-core==1.41.0
+azure-identity==1.25.3
+azure-search-documents==12.0.0
+azure-storage-blob==12.29.0
+certifi==2026.5.20
+cffi==2.0.0
+charset-normalizer==3.4.7
+click==8.4.1
+colorama==0.4.6
+cryptography==48.0.0
+distro==1.9.0
+fastapi==0.136.3
+h11==0.16.0
+httpcore==1.0.9
+httpx==0.28.1
+idna==3.16
+iniconfig==2.3.0
+isodate==0.7.2
+jiter==0.15.0
+msal==1.36.0
+msal-extensions==1.3.1
+networkx==3.6.1
+openai==2.40.0
+opentelemetry-api==1.42.1
+packaging==26.2
+pluggy==1.6.0
+pycparser==3.0
+pydantic==2.13.4
+pydantic_core==2.46.4
+Pygments==2.20.0
+PyJWT==2.13.0
+pytest==9.0.3
+python-dotenv==1.2.2
+PyYAML==6.0.3
+requests==2.34.2
+sniffio==1.3.1
+starlette==1.2.1
+tqdm==4.67.3
+truststore==0.10.4
+typing-inspection==0.4.2
+typing_extensions==4.15.0
+urllib3==2.7.0
+uvicorn==0.49.0
+# Production WSGI/ASGI server for App Service (not needed locally).
+gunicorn>=22.0

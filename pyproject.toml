@@ -1,0 +1,67 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "impactiq"
+version = "0.0.0"
+description = "Multi-agent Power Platform impact & change-intelligence agent (read-only, draft-only)."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+
+# Core runtime deps (stable, needed P0-P2). Floors only; the heavier
+# Azure-Foundry / Agent-Framework packages are deferred to the extras below
+# and pinned in-phase, after their names/versions are confirmed against live
+# Microsoft Learn docs.
+dependencies = [
+    "python-dotenv>=1.0",
+    "httpx>=0.27",
+    "azure-identity>=1.19",
+    "pydantic>=2.7",
+    "networkx>=3.3",
+    # Use the OS (Windows) certificate store for TLS so corporate/AV TLS
+    # interception roots are trusted without bundling a custom CA file.
+    "truststore>=0.9",
+]
+
+[project.optional-dependencies]
+# P3-P4 (Foundry Agent Service prompt-agent pattern + Foundry IQ KB).
+# Verified June 2026 against Microsoft Learn azure-ai-projects v2.2 readme.
+# `azure-ai-agents` (the old assistants/runs pattern) was dropped at P4 - the
+# prompt-agent path uses only `azure.ai.projects.models` for FunctionTool +
+# MCPTool + PromptAgentDefinition.
+# `azure-search-documents` is preview because P4 uses the 2026-05-01-preview
+# Knowledge Bases API.
+foundry = [
+    "azure-ai-projects>=2.2.0",
+    "azure-search-documents>=11.6.0b0",
+]
+# P7 (Microsoft Agent Framework, concurrent fan-out/fan-in). Confirmed
+# 2026-06: MAF 1.0 GA; we use only the core workflow primitives
+# (WorkflowBuilder + fan-out/fan-in edges + @executor) - the Foundry
+# connectors stay on azure-ai-projects (hybrid architecture, runbook P7).
+agents = [
+    "agent-framework-core>=1.8.1",
+]
+# P8 (Teams CEA bridge): local HTTP API the TypeScript surface calls.
+surface = [
+    "fastapi>=0.111",
+    "uvicorn>=0.30",
+]
+dev = [
+    "pytest>=8",
+]
+
+[project.scripts]
+# The runbook invokes the harness as `cli <command>`; `impactiq` is the same
+# entry point under a less generic name. Either works inside the venv.
+impactiq = "impactiq.cli:main"
+cli = "impactiq.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/impactiq"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

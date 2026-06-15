@@ -1,0 +1,48 @@
+# Secrets — NEVER commit. Only .env.example (empty placeholders) is tracked.
+.env
+.env.*
+!.env.example
+# Scratch secret holders (e.g. the generated bridge key) — never commit.
+.bridge-key.txt
+*.key.txt
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+.python-version
+
+# Tooling / caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Local estate caches / scratch (estate reads are cached, never committed)
+.cache/
+*.local.json
+
+# Delegated sign-in AuthenticationRecord (P5 --as-user). Holds no tokens —
+# those live in the OS-encrypted MSAL cache — but it's per-user state.
+.impactiq-user-auth.json
+
+# P8 audit chain (local JSONL; contains tenant record ids + user actions)
+audit-log.jsonl
+
+# Saved acceptance reports / rendered cards (local artifacts)
+p[0-9]-report.json
+p[0-9]-resumed.json
+p[0-9]-card.json
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
